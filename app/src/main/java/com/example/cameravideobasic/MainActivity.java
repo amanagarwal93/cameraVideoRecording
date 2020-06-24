@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaRecorder.stop(); // stop the recording
                 releaseMediaRecorder(); // release the MediaRecorder object
                 Toast.makeText(MainActivity.this, "Video captured!", Toast.LENGTH_LONG).show();
-                thread.interrupt();
+//                thread.interrupt();
                 recording = false;
                 Log.d("TAG", "onClick: " + recording);
             } else {
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
 
-                thread = new Thread() {
+                /*thread = new Thread() {
                     @Override
                     public void run() {
                         while (!isInterrupted()) {
@@ -322,7 +322,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 };
-                thread.start();
+                thread.start();*/
+
+                try {
+                    mediaRecorder.start();
+                } catch (final Exception ex) {
+                    // Log.i("---","Exception in thread");
+                }
+                recording = true;
             }
         }
     };
@@ -343,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
         mCamera.unlock();
         mediaRecorder.setCamera(mCamera);
 
-//        setCameraDisplayOrientation(mCamera);
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
