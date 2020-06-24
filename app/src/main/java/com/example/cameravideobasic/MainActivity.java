@@ -12,9 +12,9 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(myContext, "Sorry, your phone has only one camera!", Toast.LENGTH_LONG);
                     toast.show();
                 }
-            }else{
+            } else {
                 Log.d("TAG", "onClick: " + recording);
             }
         }
@@ -293,19 +293,19 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
 
-                thread = new Thread(){
+                thread = new Thread() {
                     @Override
                     public void run() {
-                        while(!isInterrupted()){
-                            try{
+                        while (!isInterrupted()) {
+                            try {
                                 Thread.sleep(1000);
 
                                 runOnUiThread(() -> {
                                     // If there are stories, add them to the table
-                                    if(count > 0){
+                                    if (count > 0) {
                                         timer.setText(String.valueOf(count));
                                         count--;
-                                    }else {
+                                    } else {
                                         timer.setText("");
                                         count = 0;
                                         try {
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                                         recording = true;
                                     }
                                 });
-                            }catch (InterruptedException e){
+                            } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -343,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
         mCamera.unlock();
         mediaRecorder.setCamera(mCamera);
 
+//        setCameraDisplayOrientation(mCamera);
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
